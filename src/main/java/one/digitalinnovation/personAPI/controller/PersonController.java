@@ -39,4 +39,10 @@ public class PersonController
                             //@PathVariable está indicando que a requisição tem um parametro
         return personService.findById(id);
     }
+
+    @DeleteMapping("/{id}") //Indica que minha requisição ira excluir um usuario atraves do ID
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deteleById(@PathVariable Long id) throws PersonNotFoundException {
+        personService.delete(id);
+    }
 }
