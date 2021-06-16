@@ -40,6 +40,12 @@ public class PersonController
         return personService.findById(id);
     }
 
+    @PutMapping("/{id}")
+    public MessageResponseDTO uptadeById(@PathVariable Long id,@RequestBody @Valid PersonDTO personDTO) throws PersonNotFoundException {
+        return personService.updateById(id, personDTO);
+    }
+
+
     @DeleteMapping("/{id}") //Indica que minha requisição ira excluir um usuario atraves do ID
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deteleById(@PathVariable Long id) throws PersonNotFoundException {
