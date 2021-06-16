@@ -8,6 +8,9 @@ import one.digitalinnovation.personAPI.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service //Indica ao spring que essa é uma classe que vai controlar todas as regras de negocio da aplicação
 public class PersonService
 {
@@ -32,4 +35,10 @@ public class PersonService
                 .build();
     }
 
+    public List<PersonDTO> listAll() {
+        List<Person> allPeople = personRepository.findAll();
+        return allPeople.stream()
+                        .map(personMapper::toDTO)
+                        .collect(Collectors.toList());
+    }
 }
