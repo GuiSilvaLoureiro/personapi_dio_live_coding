@@ -1,5 +1,6 @@
 package one.digitalinnovation.personAPI.service;
 
+import lombok.AllArgsConstructor;
 import one.digitalinnovation.personAPI.dto.request.PersonDTO;
 import one.digitalinnovation.personAPI.dto.response.MessageResponseDTO;
 import one.digitalinnovation.personAPI.entity.Person;
@@ -13,18 +14,19 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Service //Indica ao spring que essa é uma classe que vai controlar todas as regras de negocio da aplicação
+@Service //Indica ao spring que essa é uma classe que vai controlar todas as regras de negocio da aplicação+
+@AllArgsConstructor(onConstructor = @__(@Autowired)) // Substitui o construtor padrão
 public class PersonService
 {
     private PersonRepository personRepository;
 
     private final PersonMapper personMapper = PersonMapper.INSTANCE;
 
-    @Autowired
-    public PersonService(PersonRepository personRepository)
-    {
-        this.personRepository = personRepository;
-    }
+//    @Autowired //Construtor padrão
+//    public PersonService(PersonRepository personRepository)
+//    {
+//        this.personRepository = personRepository;
+//    }
 
     public MessageResponseDTO createPerson(PersonDTO personDTO)
     {
