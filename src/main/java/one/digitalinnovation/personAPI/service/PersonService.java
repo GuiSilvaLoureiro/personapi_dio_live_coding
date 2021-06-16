@@ -3,12 +3,14 @@ package one.digitalinnovation.personAPI.service;
 import one.digitalinnovation.personAPI.dto.request.PersonDTO;
 import one.digitalinnovation.personAPI.dto.response.MessageResponseDTO;
 import one.digitalinnovation.personAPI.entity.Person;
+import one.digitalinnovation.personAPI.exception.PersonNotFoundException;
 import one.digitalinnovation.personAPI.mapper.PersonMapper;
 import one.digitalinnovation.personAPI.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service //Indica ao spring que essa é uma classe que vai controlar todas as regras de negocio da aplicação
@@ -40,5 +42,20 @@ public class PersonService
         return allPeople.stream()
                         .map(personMapper::toDTO)
                         .collect(Collectors.toList());
+    }
+
+    public PersonDTO findById(Long id) throws PersonNotFoundException {
+        //Código refatorado
+        Person person = personRepository.findById(id)
+                .orElseThrow(() -> new PersonNotFoundException(id));
+
+        return personMapper.toDTO(person);
+
+        //Código sem refatoração
+//        Optional<Person> optionalPerson = personRepository.findById(id);
+//        if (optionalPerson.isEmpty()){
+//            throw new PersonNotFoundException(id);
+//        }
+//          return personMapper.toDTO(optionalPerson.get());
     }
 }
